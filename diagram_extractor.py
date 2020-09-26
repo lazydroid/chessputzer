@@ -7,25 +7,32 @@
 #	3. use chessputzzer to recognize the diagrams
 #	4. profit!!! =)
 #
-# This script assumes 
-
+# This script assumes you provide the path to the folder with .png pages of the book.
+# Another assumption is that chess diagrams are printed with the black borders and
+# there are no abundant vertical black lines besides the diagrams.
+#
+# Copyright (c) 2020, lenik terenin
+#
 import os, sys, cv2
 import numpy as np
 import json
 
-import datetime
 from itertools import takewhile
 
 def mean_coords( coords ) :
+	'''
+	does not really calculate an average, just the middle point between min and max
+	'''
 	x = [c[0] for c in coords]
 	y = [c[1] for c in coords]
 	return ((min(x)+max(x))/2, (min(y)+max(y))/2)
 
 def save_board( page_num, num, board ) :
-	#now = datetime.datetime.now()
-	#suffix = '%Y-%m-%d_%H%M'
-	#folder = 'boards_%s' % suffix
-	#os.mkdir( 'boards' )
+	'''
+	create a file name from page number, diagram number and saves the board
+	'''
+	if not os.path.isdir('boards' :
+		os.mkdir( 'boards' )
 	name = os.path.join( 'boards', 'page_%03d_board_%d.png' % (page_num, num))
 	print 'saving board', name
 	cv2.imwrite( name, board )
